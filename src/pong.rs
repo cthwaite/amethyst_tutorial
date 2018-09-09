@@ -14,8 +14,8 @@ use amethyst::renderer::{
 };
 
 
-const ARENA_WIDTH: f32 = 100.0;
-const ARENA_HEIGHT: f32 = 100.0;
+pub const ARENA_WIDTH: f32 = 100.0;
+pub const ARENA_HEIGHT: f32 = 100.0;
 
 
 // We create an entity that will carry our camera, with an orthographic
@@ -32,8 +32,8 @@ fn initialize_camera(world: &mut World) {
 }
 
 
-const PADDLE_HEIGHT: f32 = 16.0;
-const PADDLE_WIDTH: f32 = 4.0;
+pub const PADDLE_HEIGHT: f32 = 16.0;
+pub const PADDLE_WIDTH: f32 = 4.0;
 const SPRITESHEET_SIZE: (f32, f32) = (8.0, 16.0);
 
 #[derive(PartialEq, Eq)]

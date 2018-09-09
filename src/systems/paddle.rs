@@ -2,7 +2,7 @@ use amethyst::core::Transform;
 use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage};
 use amethyst::input::InputHandler;
 
-use pong::{Side, Paddle};
+use pong::{ARENA_HEIGHT, PADDLE_HEIGHT, Side, Paddle};
 
 
 pub struct PaddleSystem;
@@ -32,7 +32,14 @@ impl<'s> System<'s> for PaddleSystem {
             // the game area.
             if let Some(mv_amount) = movement {
                 let scaled_amount = 1.2 * mv_amount as f32;
-                transform.translation[1] += scaled_amount;
+                // Border the y-value of the transform from
+                //  - the top of the screen minus half the paddle height
+                //  to
+                //  - the the bottom of the screen (0.0) plus half the paddle
+                //      height
+                transform.translation[1] = (transform.translation[1] + scaled_amount)
+                                            .min(ARENA_HEIGHT - PADDLE_HEIGHT * 0.5)
+                                            .max(PADDLE_HEIGHT * 0.5);
             }
         }
     }
