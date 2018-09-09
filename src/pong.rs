@@ -37,11 +37,11 @@ const PADDLE_WIDTH: f32 = 4.0;
 const SPRITESHEET_SIZE: (f32, f32) = (8.0, 16.0);
 
 #[derive(PartialEq, Eq)]
-enum Side {
+pub enum Side {
     Left, Right
 }
 
-struct Paddle {
+pub struct Paddle {
     pub side: Side,
     pub width: f32,
     pub height: f32

@@ -1,7 +1,9 @@
 extern crate amethyst;
 mod pong;
+mod systems;
 
 use amethyst::prelude::*;
+use amethyst::input::InputBundle;
 use amethyst::core::transform::TransformBundle;
 use amethyst::renderer::{DisplayConfig, DrawFlat, Pipeline, PosTex,
                          RenderBundle, Stage};
@@ -13,6 +15,11 @@ fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
     let path = "./resources/display_config.ron";
     let config = DisplayConfig::load(&path);
+
+    let binding_path = format!("{}/resources/bindings_config.ron",
+                               env!("CARGO_MANIFEST_DIR"));
+    let input_bundle = InputBundle::<String, String>::new()
+                        .with_bindings_from_file(binding_path)?;
 
     // The important thing to know right now is that this renders a black
     // background. If you want a different color you can tweak the RGBA values
@@ -30,8 +37,10 @@ fn main() -> amethyst::Result<()> {
     // most of the actions above. In the full pong example in the Amethyst
     // repository, that function is used instead.
     let game_data = GameDataBuilder::default()
+                        .with_bundle(input_bundle)?
                         .with_bundle(TransformBundle::new())?
-                        .with_bundle(RenderBundle::new(pipe, Some(config)))?;
+                        .with_bundle(RenderBundle::new(pipe, Some(config)))?
+                        .with(systems::PaddleSystem, "paddle_system", &["input_system"]);
 
     // [Application] binds the OS event loop, state machines, timers and other
     // core components in a central place.
