@@ -2,6 +2,7 @@ extern crate amethyst;
 mod pong;
 
 use amethyst::prelude::*;
+use amethyst::core::transform::TransformBundle;
 use amethyst::renderer::{DisplayConfig, DrawFlat, Pipeline, PosTex,
                          RenderBundle, Stage};
 
@@ -29,6 +30,7 @@ fn main() -> amethyst::Result<()> {
     // most of the actions above. In the full pong example in the Amethyst
     // repository, that function is used instead.
     let game_data = GameDataBuilder::default()
+                        .with_bundle(TransformBundle::new())?
                         .with_bundle(RenderBundle::new(pipe, Some(config)))?;
 
     // [Application] binds the OS event loop, state machines, timers and other
